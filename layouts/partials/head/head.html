@@ -11,10 +11,15 @@
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Alice|Open+Sans:400,300,700">
 	
 	{{ $styles := resources.Get "css/styles.css" }}
-  {{ $css := $styles | resources.Minify | resources.Fingerprint "sha512"  }}
-  <link rel="stylesheet" href="{{ $css.Permalink }}" integrity="{{ $css.Data.Integrity }}">
+  	{{ $css := $styles | resources.Minify | resources.Fingerprint "sha512"  }}
+	<link rel="stylesheet" href="{{ $css.Permalink }}" integrity="{{ $css.Data.Integrity }}">
+	  
+	<!-- Add custom css files TODO: add integrity -->
+	{{ range .Site.Params.custom_css }}
+    	<link rel="stylesheet" href="{{ . | absURL }}">
+	{{- end }}
 
-  <!-- Share this --> 
-  {{ if .Site.Params.customsharethis }}
-	<script type="text/javascript" src="//platform-api.sharethis.com/js/sharethis.js#property={{ .Site.Params.sharethis.property }}&product=custom-share-buttons"></script>
+  	<!-- Share this --> 
+  	{{ if .Site.Params.customsharethis }}
+		<script type="text/javascript" src="//platform-api.sharethis.com/js/sharethis.js#property={{ .Site.Params.sharethis.property }}&product=custom-share-buttons"></script>
 	{{ end }}
